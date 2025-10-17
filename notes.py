@@ -378,3 +378,7 @@ Run and submit the CLI tests from the root of the project.
 
 You can delete the files in the public directory, they aren't needed anymore.
 '''
+
+'''
+TEXTNODE TESTS
+'''
