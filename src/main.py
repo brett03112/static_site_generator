@@ -1,6 +1,6 @@
 from textnode import TextNode, TextType
 
-print("hello world")
+print("Hello World")
 
 def main():
     """Create a TextNode instance with dummy data and print it."""
