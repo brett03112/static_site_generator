@@ -531,3 +531,115 @@ Add more tests for different tag types.
 
 Run and submit the CLI tests from the root of the project.
 '''
+
+'''
+ParentNode
+I heard you like recursion.
+
+![/assets/parent-node.png](/assets/parent-node.png)
+
+Our new ParentNode class will handle the nesting of HTML nodes inside of one another. Any HTML node that's not "leaf" node (i.e. it has children) 
+is a "parent" node.
+
+Assignment:
+1. Create another child class of HTMLNode called ParentNode. Its constructor should differ from HTMLNode in that:
+  - The tag and children arguments are not optional
+  - It doesn't take a value argument
+  - props is optional
+  - (It's the exact opposite of the LeafNode class)
+
+2. Add a .to_html method.
+  1. If the object doesn't have a tag, raise a ValueError.
+  2. If children is a missing value, raise a ValueError with a different message.
+  3. Otherwise, return a string representing the HTML tag of the node and its children. This should be a recursive method (each recursion being 
+    called on a nested child node).
+
+You can iterate over all the children and call to_html on each, concatenating the results and injecting them between the opening and closing tags 
+of the parent.
+
+For example, this node and its children:
+```python
+  node = ParentNode(
+      "p",
+      [
+          LeafNode("b", "Bold text"),
+          LeafNode(None, "Normal text"),
+          LeafNode("i", "italic text"),
+          LeafNode(None, "Normal text"),
+      ],
+  )
+
+  node.to_html()
+```
+
+Should convert to:
+```markdown
+<p><b>Bold text</b>Normal text<i>italic text</i>Normal text</p>
+```
+
+Don't worry about indentation or pretty-printing. If pretty-printed it would look like this:
+
+```html
+<p>
+  <b>Bold text</b>
+  Normal text
+  <i>italic text</i>
+  Normal text
+</p>
+```
+
+Most editors are easily configured to auto-format HTML on save, so we won't worry about implementing that in our code.
+
+3. I wrote many tests for this class. I recommend you do the same, there is a lot of room for error. Test all the edge cases you can think of, 
+including nesting ParentNode objects inside of one another, multiple children, and no children. Here's a couple to get you started:
+
+```python
+def test_to_html_with_children(self):
+    child_node = LeafNode("span", "child")
+    parent_node = ParentNode("div", [child_node])
+    self.assertEqual(parent_node.to_html(), "<div><span>child</span></div>")
+
+def test_to_html_with_grandchildren(self):
+    grandchild_node = LeafNode("b", "grandchild")
+    child_node = ParentNode("span", [grandchild_node])
+    parent_node = ParentNode("div", [child_node])
+    self.assertEqual(
+        parent_node.to_html(),
+        "<div><span><b>grandchild</b></span></div>",
+    )
+```
+
+Run and submit the CLI tests from the root of the project.
+'''
+
+'''
+TextNode to HTMLNode
+We need a way to convert a TextNode to an HTMLNode, specifically a LeafNode.
+
+Assignment
+1. Write a function:
+```python
+  def text_node_to_html_node(text_node):
+```
+
+It should handle each type of the TextType enum. If it gets a TextNode that is none of those types, it should raise an exception. Otherwise, 
+it should return a new LeafNode object.
+
+- TextType.TEXT: This should return a LeafNode with no tag, just a raw text value.
+- TextType.BOLD: This should return a LeafNode with a "b" tag and the text
+- TextType.ITALIC: "i" tag, text
+- TextType.CODE: "code" tag, text
+- TextType.LINK: "a" tag, anchor text, and "href" prop
+- TextType.IMAGE: "img" tag, empty string value, "src" and "alt" props ("src" is the image URL, "alt" is the alt text)
+
+2. Add some tests. Here's one to get you started:
+
+```python
+def test_text(self):
+    node = TextNode("This is a text node", TextType.TEXT)
+    html_node = text_node_to_html_node(node)
+    self.assertEqual(html_node.tag, None)
+    self.assertEqual(html_node.value, "This is a text node")
+```
+Run and submit the CLI tests from the root of the project.
+'''
