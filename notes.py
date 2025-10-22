@@ -484,3 +484,50 @@ Notice the leading space character before href and before target. This is import
 
 Run and submit the CLI tests.
 '''
+
+
+'''
+LeafNode
+Time to render some HTML strings!
+
+A LeafNode is a type of HTMLNode that represents a single HTML tag with no children. For example, a simple <p> tag with some text inside of it:
+
+<p>This is a paragraph of text.</p>
+
+We call it a "leaf" node because it's a "leaf" in the tree of HTML nodes. It's a node with no children. In this next example, <p> is not a leaf node, 
+but <b> is.
+
+  <p>
+    This is a paragraph. It can have a lot of text inside tbh.
+    <b>This is bold text.</b>
+    This is the last sentence.
+  </p>
+
+Assignment
+1. Create a child class of HTMLNode called LeafNode. Its constructor should differ slightly from the HTMLNode class because:
+  - It should not allow for any children
+  - Both the value and tag data members should be required (even though the tag's value may be None), while props can remain optional like the HTMLNode 
+  constructor.
+
+Use the super() function to call the constructor of the HTMLNode class.
+
+2. Add a .to_html() method that renders a leaf node as an HTML string (by returning a string).
+  - If the leaf node has no value, it should raise a ValueError. All leaf nodes must have a value.
+  - If there is no tag (e.g. it's None), the value should be returned as raw text.
+  - Otherwise, it should render an HTML tag. For example, these leaf nodes:
+
+  LeafNode("p", "This is a paragraph of text.").to_html()
+  "<p>This is a paragraph of text.</p>"
+
+  LeafNode("a", "Click me!", {"href": "https://www.google.com"}).to_html()
+  "<a href="https://www.google.com">Click me!</a>"
+
+3. Add some tests. Here's one to get you started:
+  def test_leaf_to_html_p(self):
+      node = LeafNode("p", "Hello, world!")
+      self.assertEqual(node.to_html(), "<p>Hello, world!</p>")
+
+Add more tests for different tag types.
+
+Run and submit the CLI tests from the root of the project.
+'''
