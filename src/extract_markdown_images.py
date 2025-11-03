@@ -1,4 +1,6 @@
 from textnode import TextNode, TextType
+from inline_markdown import split_nodes_delimiter
+from htmlnode import HTMLNode, LeafNode, ParentNode
 import re
 
 def extract_markdown_images(text):
@@ -24,9 +26,9 @@ def extract_markdown_links(text):
     ```python
     text = "This is text with a [Google](https://www.google.com) link and a [GitHub](https://github.com) link."
     print(extract_markdown_links(text))
-    # [("Google", "https://www.google.com"), ("GitHub", "https://github.com")]
+    # [("Google", "https://www.google.com"), ("GitHub", "https://github.com)]
     ```
     """ 
-    pattern = r'\[([^\]]+)\]\(([^)]+)\)'
+    pattern = r'(?<!!)\[([^\]]+)\]\(([^)]+)\)'
     matches = re.findall(pattern, text)
     return matches

@@ -1,5 +1,5 @@
-from testnode import TestNode, TextType
-import unittest, re
+from textnode import TextNode, TextType
+import unittest
 from extract_markdown_images import extract_markdown_images, extract_markdown_links
     
 class TestExtractMarkdown(unittest.TestCase):
@@ -35,25 +35,3 @@ class TestExtractMarkdown(unittest.TestCase):
         
 if __name__ == '__main__':
     unittest.main()
-    """
-    This function processes a list of TextNode objects and splits any PLAIN text nodes
-    that contain the specified delimiter. Text between delimiters is converted to the
-    specified text_type, while text outside delimiters remains PLAIN.
-    Args:
-        old_nodes (list[TextNode]): List of TextNode objects to process
-        delimiter (str): The delimiter string to split on (e.g., "`", "**", "_")
-        text_type (TextType): The TextType to apply to text found between delimiters
-    Returns:
-        list[TextNode]: A new list of TextNode objects with delimited text split out
-    Raises:
-        ValueError: If a delimiter is opened but not closed (invalid markdown syntax)
-    Examples:
-        >>> node = TextNode("This is text with a `code block` word", TextType.PLAIN)
-        >>> new_nodes = split_nodes_delimiter([node], "`", TextType.CODE)
-        >>> # Returns: [
-        >>>     TextNode("This is text with a ", TextType.PLAIN),
-        >>>     TextNode("code block", TextType.CODE),
-        >>>     TextNode(" word", TextType.PLAIN)
-        >>> # ] 
-    """
-    new_nodes = []
