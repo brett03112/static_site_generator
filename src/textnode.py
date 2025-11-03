@@ -66,3 +66,4 @@ class TextNode:
                  the text content, text type, and URL of the TextNode.
         """
         return f"TextNode({self.text}, {self.text_type}, {self.url})"
+    
