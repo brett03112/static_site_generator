@@ -714,3 +714,151 @@ I don't want to give you full pseudocode, but here are some pointers:
 - The .split() string method was useful
 - The .extend() list method was useful
 ''' 
+
+'''
+REGEX
+
+Before we build the next bit, we need to understand a bit about regexes, or "regular expressions". "Regex" for short, is a programming-language-agnostic 
+way of searching for patterns in text.
+
+They're famous for being hard to read, but occasionally, they are the simplest way to solve a problem.
+
+To get really good at using regex, we'd need a full course on the topic. For now, let's just cover the basics. In Python, we can use the re module to work with regex. 
+It has a findall function that will return a list of all the matches in a string. See examples below.
+
+```python
+
+import re
+
+text = "I'm a little teapot, short and stout. Here is my handle, here is my spout."
+matches = re.findall(r"teapot", text)
+print(matches) # ['teapot']
+```
+
+- r"teapot" is a regex pattern.
+- The r tells Python to treat the string as a "raw" string, which means we don't have to use escape sequences for backslashes. Escaping in Python involves using a 
+  backslash (\) to ensure special characters are treated as literal characters.
+- The pattern teapot will match any exact occurrences of the word "teapot" in the input.
+
+REGEX FOR PHONE NUMBERS
+
+```python
+
+text = "My phone number is 555-555-5555 and my friend's number is 555-555-5556"
+matches = re.findall(r"\d{3}-\d{3}-\d{4}", text)
+print(matches) # ['555-555-5555', '555-555-5556']
+
+```
+
+- \d matches any digit
+- {3} means "exactly three of the preceding character"
+- `-` is just a literal - that we want to match
+
+Regex for Text Between Parentheses
+
+```python
+text = "I have a (cat) and a (dog)"
+matches = re.findall(r"\((.*?)\)", text)
+print(matches) # ['cat', 'dog']
+```
+
+- \( and \) are escaped parentheses that we want to match
+- ( and ) is a capture group, meaning it groups the matched text, allowing us to reference or extract it separately.
+- .*? matches any number of characters (except for line terminators) between the parentheses
+
+Regex for Emails Multiple Capture Groups
+
+```python
+text = "My email is lane@example.com and my friend's email is hunter@example.com"
+matches = re.findall(r"(\w+)@(\w+\.\w+)", text)
+print(matches)  # [('lane', 'example.com'), ('hunter', 'example.com')]
+```
+
+- \w matches any word character (alphanumeric characters and underscores)
+- + means "one or more of the preceding character"
+- @ is just a literal @ symbol that we want to match
+- \. is a literal . that we want to match (The . is a special character in regex, so we escape it with a leading backslash)
+
+TESTING REGEX
+
+I love regexr.com for interactive regex testing, it breaks down each part of the pattern and explains what it does.
+
+
+Which regex will match the following text:
+[hello world]
+
+```python
+
+import re
+text = "[hello world]"
+matches = re.findall(r"\[(.*?)\]", text)
+print(matches)  # ['hello world']
+```
+
+'''
+
+'''
+EXTRACT LINKS
+
+Time to extract the links and images from our Markdown using regex.
+
+Regex Examples (So You Have Them Handy)
+The findall function that will return a list of all the matches in a string.
+
+```python
+import re
+text = "I'm a little teapot, short and stout. Here is my handle, here is my spout."
+matches = re.findall(r"teapot", text)
+print(matches) # ['teapot']
+
+text = "My email is lane@example.com and my friend's email is hunter@example.com"
+matches = re.findall(r"(\w+)@(\w+\.\w+)", text)
+print(matches)  # [('lane', 'example.com'), ('hunter', 'example.com')]
+```
+
+Use regexr.com for interactive regex testing, it breaks down each part of the pattern and explains what it does.
+
+!! There are spoilers in the tip section if you don't want to figure out the regex patterns yourself.
+
+Assignment:
+
+1. Create a function extract_markdown_images(text) that takes raw markdown text and returns a list of tuples. Each tuple should contain the alt text and the 
+URL of any markdown images. For example:
+
+```python
+text = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
+print(extract_markdown_images(text))
+# [("rick roll", "https://i.imgur.com/aKaOqIh.gif"), ("obi wan", "https://i.imgur.com/fJRm4Vk.jpeg")]
+```
+
+2. Create a similar function extract_markdown_links(text) that extracts markdown links instead of images. It should return tuples of anchor text and URLs. For example:
+
+```python
+text = "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)"
+print(extract_markdown_links(text))
+# [("to boot dev", "https://www.boot.dev"), ("to youtube", "https://www.youtube.com/@bootdotdev")]
+```
+
+3. Write a bunch of tests. Here's one for finding an image:
+
+```python
+def test_extract_markdown_images(self):
+    matches = extract_markdown_images(
+        "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png)"
+    )
+    self.assertListEqual([("image", "https://i.imgur.com/zjjcJKZ.png")], matches)
+```
+
+Run and submit the CLI tests from the root of the project.
+
+TIPS
+
+Below are spoilers!!! You don't need to be a regex master for this course, but if you want to challenge yourself, try to write the regexes 
+without looking below. If you don't care, I've provided them for you.
+
+Regex for Images
+r"!\[([^\[\]]*)\]\(([^\(\)]*)\)"
+
+REGEX FOR LINKS
+r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)"
+'''

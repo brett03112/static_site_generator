@@ -1,0 +1,5 @@
+{
+    "csharp.inlayHints.enableInlayHintsForImplicitObjectCreation": true,
+    "csharp.inlayHints.enableInlayHintsForImplicitVariableTypes": true,
+    "python.languageServer": "None"
+}

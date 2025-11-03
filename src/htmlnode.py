@@ -2,7 +2,7 @@ from __future__ import annotations
 from textnode import TextType
 
 class HTMLNode:
-    def __init__(self, tag: str = None, value: str = None, children: HTMLNode = None, props: dict = None):
+    def __init__(self, tag: str = None, value: str = None, children: HTMLNode = None, props: dict = None): # type: ignore
         """
         Initialize an HTMLNode instance.
 
@@ -56,7 +56,7 @@ class HTMLNode:
 
 
 class LeafNode(HTMLNode):
-    def __init__(self, tag: str = None, value: str = None, props: dict = None):
+    def __init__(self, tag: str = None, value: str = None, props: dict = None): # type: ignore
         """
         Initialize a LeafNode instance, which is a type of HTMLNode that does not have children.
 
@@ -65,7 +65,7 @@ class LeafNode(HTMLNode):
             value (str, optional): The text content/value of the HTML node. Defaults to None.
             props (dict, optional): A dictionary of HTML attributes (e.g., {'href': 'url'}). Defaults to None.
         """
-        super().__init__(tag=tag, value=value, children=None, props=props)
+        super().__init__(tag=tag, value=value, children=None, props=props) #type: ignore
     
     def to_html(self):
         """
@@ -92,7 +92,7 @@ class LeafNode(HTMLNode):
             return f"<{self.tag}>{self.value}</{self.tag}>"
     
 class ParentNode(HTMLNode):
-    def __init__(self, tag: str = None, children: list[HTMLNode] = None, props: dict = None):
+    def __init__(self, tag: str = None, children: list[HTMLNode] = None, props: dict = None): #type: ignore
         """
         Initialize a ParentNode instance, which is a type of HTMLNode that can have children.
 
@@ -101,7 +101,7 @@ class ParentNode(HTMLNode):
             children (list[HTMLNode], optional): A list of child HTMLNode instances. Defaults to None.
             props (dict, optional): A dictionary of HTML attributes (e.g., {'class': 'container'}). Defaults to None.
         """
-        super().__init__(tag=tag, value=None, children=children, props=props)
+        super().__init__(tag=tag, value=None, children=children, props=props) #type: ignore
 
     def to_html(self):
         """
@@ -122,7 +122,7 @@ class ParentNode(HTMLNode):
 
         children_html = ""
         if self.children:
-            for child in self.children:
+            for child in self.children: #type: ignore
                 children_html += child.to_html()
 
         return f"{opening_tag}{children_html}{closing_tag}"
@@ -142,7 +142,7 @@ def text_node_to_html_node(text_node):
         ValueError: If the text_node has an unsupported TextType or is an IMAGE type.
     """
     if text_node.text_type == TextType.PLAIN:
-        return LeafNode(tag=None, value=text_node.text)
+        return LeafNode(tag=None, value=text_node.text) #type: ignore
     elif text_node.text_type == TextType.LINK:
         return LeafNode(tag="a", value=text_node.text, props={"href": text_node.url})
     elif text_node.text_type == TextType.BOLD:
